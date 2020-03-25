@@ -1,0 +1,125 @@
+{% load i18n %}
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    {%block styles%}
+    <link rel="stylesheet" type="text/css" href="{% static "bootstrap/css/bootstrap.css" %}" >
+     {%endblock%}
+
+     {%block scripts%} 
+    <script type="text/javascripts" src="{% static "jquery/jquery-3.4.1.min.js"%}"></script>
+    <script type="text/javascripts" src="{% static "bootstrap/js/bootstrap.js"%}"></script>
+    {%endblock%}
+
+    <title>{% block title %}Simple is Better Than Complex{% endblock %}</title>
+  </head>
+
+<style>
+.light-page-content {
+    color: #333;
+    padding: 50px 50px;
+    background: rgb(255, 255, 255);
+}
+.other {
+    color: #333;
+    padding: 10px 10px;
+    background: rgb(255, 255, 255);
+}
+
+</style>
+
+
+  <body style="background-color:black;">
+
+        <header>
+
+
+        </header>
+
+      <main>
+        {% block content %}
+
+          <div class="container">
+
+              <div class="row">
+                    <div class = "col-3">
+                    </div>   
+                            <div class = "col-5 mb-4 my-sm-4">
+                                <div class = "light-page-content">
+                                  <div class = "other">
+                                  <h1 style="text-align:center">SIGN UP WITH</h1>
+                                    <p style="text-align:center">
+
+                                      <a href="{% url 'social:begin' 'facebook' %}"> 
+                                        <img src="{% static "facebook.png"%}" width="100" height="40" class="btn btn-light" data-toggle="tooltip" title="{% trans 'Facebook' %}">
+                                       </a>
+
+                                      <a href="{% url 'social:begin' 'google-oauth2' %}">
+                                        <img src="{% static "google.png"%}" width="100" height="40" class="btn btn-light" data-toggle="tooltip" title="{% trans 'Google' %}">
+                                      </a>
+                                    </p>
+
+                                    <hr>
+                                    <form method="post">
+
+                                        {% csrf_token %}
+                                            {% for field in form %}
+
+                                            <p style="text-align:center">
+                                            {%if field.name != "boolean"%}
+                                            {{ field }} <br>
+                                            {%endif%}
+                                            {% for error in field.errors %}
+                                              <p style="color: red">{{ error }}</p>
+                                            </p>
+                                            {% endfor %}
+                                            {% endfor %}
+                                            
+                                            {% for field in form %}
+                                              <p style="text-align:center">
+                                              {%if field.name == "boolean"%}
+                                                {{field}} I`d like to receive PlacePass news and offers
+                                              {%endif%}
+                                            </p>
+                                            
+                                            {% endfor %}
+
+                                            <p style="text-align:left">
+                                              Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. 
+                                            </p>
+
+
+                                           <p style="text-align:center">
+                                              <button type="submit" class="btn btn-success btn-lg btn-block">
+                                                Register
+                                              </button>
+                                           </p>
+                                            <p style="text-align:right">
+                                                <a>
+                                                  Already have an account?  
+                                                </a>
+                                              <a href="{% url 'login' %}" class="btn btn-outline-primary">
+                                                login
+                                              </a>  
+                                             </p>
+                                    </form>
+
+                                  </div>
+
+                                </div>
+
+                            </div>
+
+              </div>
+          </div>
+
+        {% endblock %}
+
+      </main> 
+
+  </body>
+
+</html>

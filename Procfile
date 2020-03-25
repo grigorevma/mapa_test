@@ -1,0 +1,1 @@
+web: gunicorn 'mapa_test.wsgi:application' --log-file -
